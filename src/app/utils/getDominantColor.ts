@@ -1,3 +1,4 @@
+// @ts-ignore
 import ColorThief from 'color-thief-ts';
 
 export const getDominantColor = async (imageUrl: string): Promise<string> => {
