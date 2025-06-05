@@ -21,7 +21,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
 }) => {
   const [boxShadowColor, setBoxShadowColor] = useState("rgba(0, 0, 0, 0.4)");
   const imgRef = useRef<HTMLImageElement | null>(null);
-  console.log(image)
+  console.log(Image)
   function getAverageColor(imageEl: HTMLImageElement) {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
