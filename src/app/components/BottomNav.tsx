@@ -57,7 +57,9 @@ const BottomNav: React.FC = () => {
           return (
             <button
               key={item.id}
-              ref={(el) => (buttonRefs.current[index] = el)}
+              ref={(el) => {
+                buttonRefs.current[index] = el;
+              }}
               className={`${styles.navButton} ${isActive ? styles.active : ""}`}
               onClick={() => setActiveTab(item.id)}
             >
