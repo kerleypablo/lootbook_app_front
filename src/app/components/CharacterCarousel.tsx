@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import CharacterCard from "./CharacterCard";
+import NewCharacterCard from "./NewCharacterCard";
 import styles from "./css/CharacterCarousel.module.css";
 
 interface Character {
@@ -30,12 +31,12 @@ const characters: Character[] = [
     level: 7,
     image: "/images/image3.png",
   },
-   {
+  {
     id: 3,
-    name: "Charles Lourance",
-    race: "Human",
-    class: "Warlock",
-    level: 8,
+    name: "Throg",
+    race: "Orc",
+    class: "Barbarian",
+    level: 6,
     image: "/images/image2.png",
   },
 ];
@@ -55,23 +56,37 @@ const CharacterCarousel = () => {
     emblaApi.on("select", onSelect);
   }, [emblaApi, onSelect]);
 
+ type SlideItem =
+  | ({ type: "character" } & Character)
+  | { type: "create"; id: string };
+
+const slides: SlideItem[] = [
+  { id: "new-start", type: "create" },
+  ...characters.map(c => ({ ...c, type: "character" as const })),
+  { id: "new-end", type: "create" }
+];
+
   return (
     <div className={styles.embla} ref={emblaRef}>
       <div className={styles.emblaContainer}>
-        {characters.map((character, index) => (
+        {slides.map((slide, index) => (
           <div
-            key={character.id}
+            key={slide.id ?? index}
             className={`${styles.emblaSlide} ${
               index === selectedIndex ? styles.active : styles.inactive
             }`}
           >
-            <CharacterCard
-              image={character.image}
-              name={character.name}
-              race={character.race}
-              class={character.class}
-              level={character.level}
-            />
+            {slide.type === "character" ? (
+              <CharacterCard
+                image={slide.image}
+                name={slide.name}
+                race={slide.race}
+                class={slide.class}
+                level={slide.level}
+              />
+            ) : (
+              <NewCharacterCard />
+            )}
           </div>
         ))}
       </div>

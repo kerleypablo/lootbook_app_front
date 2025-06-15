@@ -5,16 +5,17 @@ import Header from './components/Header';
 import Navigation from './components/Navigation';
 import CharacterCarousel from './components/CharacterCarousel';
 import BottomNav from './components/BottomNav';
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
         <motion.main 
-        className="flex min-h-screen flex-col text-white"
+        className={styles.pageWrapper}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-      <div className="max-w-md mx-auto w-full px-4 py-6 flex flex-col min-h-screen">
+      <div className={styles.innerWrapper}>
         <Header 
           profileName="Lucien" 
           profileImage="/images/charles_lourance.png" 

@@ -14,7 +14,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ profileName, profileImage }) => {
   return (
     <header className="w-full flex justify-between items-center p-4">
-      {/* Logo + Texto LOOTBOOK */}
       <div className="flex items-center space-x-2">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
