@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { FiSearch } from "react-icons/fi";
 import styles from "./css/navigation.module.css";
-import SettingsIcon from "@/assets/settings-icon.svg";
 
 const NavigationNewCharacter: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("Recent");
