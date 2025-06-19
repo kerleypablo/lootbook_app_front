@@ -10,6 +10,7 @@ interface ClassCardProps {
   image: string;
   selected: boolean;
   onSelect: (id: string, accentColor?: string) => void;
+  accentColor?: string;
   innerRef?: React.RefObject<HTMLDivElement>;
 }
 
@@ -49,6 +50,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
   image,
   selected,
   onSelect,
+  accentColor,
   innerRef,
 }) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -67,6 +69,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
       className={`${styles.card} ${selected ? styles.active : ""}`}
       onClick={handleClick}
       ref={innerRef}
+      style={selected && accentColor ? { '--accent-color': accentColor } as React.CSSProperties : undefined}
     >
       <div className={styles.imageWrapper}>
         <Image
