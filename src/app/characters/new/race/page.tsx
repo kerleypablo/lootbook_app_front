@@ -49,11 +49,11 @@ export default function RacePage() {
             className="absolute left-0 w-full z-0 transition-all duration-500 ease-in-out pointer-events-none"
             style={{
               height: "150px",
-              top: `${shadowTop}px`,
+              top: `${shadowTop -15}px`,
               backgroundColor: accentColor,
-              borderRadius: "16px",
-              filter: "blur(80px)",
-              opacity: 1.5
+              borderRadius: "10px",
+              filter: "blur(30px)",
+              opacity: 1.8,
             }}
           />
         )}

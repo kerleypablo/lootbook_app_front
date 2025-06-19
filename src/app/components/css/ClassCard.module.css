@@ -105,6 +105,7 @@
   margin: 0 auto;
   border: 2px solid transparent;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .card:hover {
