@@ -53,7 +53,7 @@ export default function RacePage() {
               backgroundColor: accentColor,
               borderRadius: "16px",
               filter: "blur(80px)",
-              opacity: 0.8,
+              opacity: 1.5
             }}
           />
         )}
