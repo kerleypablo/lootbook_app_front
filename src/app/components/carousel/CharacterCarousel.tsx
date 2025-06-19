@@ -1,9 +1,9 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import CharacterCard from "./CharacterCard";
-import NewCharacterCard from "./NewCharacterCard";
-import styles from "./css/CharacterCarousel.module.css";
+import CharacterCard from "../cards/CharacterCard";
+import NewCharacterCard from "../cards/NewCharacterCard";
+import styles from "../css/CharacterCarousel.module.css";
 
 interface Character {
   id: number;

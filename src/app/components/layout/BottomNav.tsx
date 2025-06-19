@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import styles from "./css/bottomnav.module.css";
+import styles from "../css/bottomnav.module.css";
 import BookIcon from "@/assets/BookIcon.svg";
 import SwordIcon from "@/assets/SwordIcon.svg";
 import SettingsIcon from "@/assets/SettingsIcon.svg";

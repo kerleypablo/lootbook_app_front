@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import styles from "./css/ClassCard.module.css";
+import styles from "../css/ClassCard.module.css";
 
 interface ClassCardProps {
   id: string;

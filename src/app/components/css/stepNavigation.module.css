@@ -1,0 +1,70 @@
+.button {
+  width: 86px;
+  height: 48px;
+  border-radius: 32px;
+  padding: 12px 24px;
+  gap: 8px;
+  border-width: 1.5px;
+  border-style: solid;
+  background: linear-gradient(180deg, rgba(1, 110, 92, 0.2) 0%, rgba(2, 212, 177, 0.2) 100%);
+  color: #00bfa6;
+  font-family: 'Acme', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  transition: all 100ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:active {
+  background: linear-gradient(180deg, rgba(1, 110, 92, 0.4) 0%, rgba(2, 212, 177, 0.4) 100%);
+  border-color: rgba(1, 150, 125, 1);
+  scale: 0.98;
+}
+
+.buttonFull {
+  width: 100%;
+}
+
+.buttonBorder {
+  border-color: rgba(1, 150, 125, 1);
+}
+
+.buttonDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  background: none;
+  color: #ffffff;
+  font-family: 'Acme', sans-serif;
+font-weight: 400;
+font-size: 18px;
+line-height: 24px;
+letter-spacing: 0;
+text-align: center;
+}
+
+.buttonFlat {
+  background: #014c43; /* fundo mais escuro */
+  border: none;
+  color: #ffffff;
+  font-family: 'Acme', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  transition: all 100ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+  padding: 12px 24px;
+}
+
+.buttonFlat:active {
+  opacity: 0.8;
+  scale: 0.98;
+}

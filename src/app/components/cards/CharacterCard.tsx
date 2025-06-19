@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import styles from "./css/CharacterCard.module.css";
+import styles from "../css/CharacterCard.module.css";
 import Arrowicon from "@/assets/arrowicon.svg";
 
 interface CharacterCardProps {

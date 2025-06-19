@@ -1,10 +1,10 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import Header from './components/Header';
-import Navigation from './components/Navigation';
-import CharacterCarousel from './components/CharacterCarousel';
-import BottomNav from './components/BottomNav';
+import Header from './components/layout/Header';
+import Navigation from './components/navigation/Navigation';
+import CharacterCarousel from './components/carousel/CharacterCarousel';
+import BottomNav from './components/layout/BottomNav';
 import styles from "./page.module.css";
 
 export default function Home() {
