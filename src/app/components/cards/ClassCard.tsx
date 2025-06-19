@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import styles from "../css/ClassCard.module.css";
 
@@ -9,7 +9,8 @@ interface ClassCardProps {
   description: string;
   image: string;
   selected: boolean;
-  onSelect: (id: string) => void;
+  onSelect: (id: string, accentColor?: string) => void;
+  innerRef?: React.RefObject<HTMLDivElement>;
 }
 
 const getDominantColor = (imageElement: HTMLImageElement): string => {
@@ -22,7 +23,10 @@ const getDominantColor = (imageElement: HTMLImageElement): string => {
   ctx.drawImage(imageElement, 0, 0, width, height);
 
   const imageData = ctx.getImageData(0, 0, width, height).data;
-  let r = 0, g = 0, b = 0, count = 0;
+  let r = 0,
+    g = 0,
+    b = 0,
+    count = 0;
 
   for (let i = 0; i < imageData.length; i += 4 * 50) {
     r += imageData[i];
@@ -45,22 +49,24 @@ const ClassCard: React.FC<ClassCardProps> = ({
   image,
   selected,
   onSelect,
+  innerRef,
 }) => {
-  const [accentColor, setAccentColor] = useState<string>("#ffffff");
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  useEffect(() => {
-    if (imgRef.current && selected) {
+  const handleClick = () => {
+    if (imgRef.current) {
       const color = getDominantColor(imgRef.current);
-      setAccentColor(color);
+      onSelect(id, color);
+    } else {
+      onSelect(id);
     }
-  }, [selected]);
+  };
 
   return (
     <div
       className={`${styles.card} ${selected ? styles.active : ""}`}
-      style={selected ? { border: `2px solid ${accentColor}` } : undefined}
-      onClick={() => onSelect(id)}
+      onClick={handleClick}
+      ref={innerRef}
     >
       <div className={styles.imageWrapper}>
         <Image
