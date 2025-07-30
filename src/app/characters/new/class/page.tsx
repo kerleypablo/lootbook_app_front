@@ -4,22 +4,18 @@ import ClassCard from "../../../components/cards/ClassCard";
 import NavigationNewCharacter from "../../../components/navigation/NavigationNewCharacter";
 import StepNavigation from "../../../components/navigation/StepNavigation";
 
-const RACES = [
-  { id: "wizard", name: "WIZARD", description: "Masters of arcane power", image: "/images/raceImages/wizard.png" },
-  { id: "fighter", name: "FIGHTER", description: "Brave in Melee Combat", image: "/images/raceImages/fighter.png" },
-  { id: "cleric", name: "CLERIC", description: "Divine magic and healing", image: "/images/raceImages/cleric.png" },
-  { id: "rogue", name: "ROGUE", description: "Stealthy and cunning", image: "/images/raceImages/rogue.png" },
-  { id: "druid", name: "DRUID", description: "Natural magic and wild shapes", image: "/images/raceImages/druid.png" },
-  { id: "Sorcerer", name: "SORCERER", description: "Innate magical talent", image: "/images/raceImages/sorcerer.png" },
-  { id: "Warlock", name: "WARLOCK", description: "Pact magic and summoning", image: "/images/raceImages/warlock.png" },
-  { id: "Paladin", name: "PALADIN", description: "Holy warrior bound by oath", image: "/images/raceImages/paladin.png" },
-  { id: "Monk", name: "MONK", description: "Master of martial arts", image: "/images/raceImages/monk.png" },
-  { id: "Artificer", name: "ARTIFICER", description: "Inventive magical crafter", image: "/images/raceImages/Artificer.png" },
-  { id: "Bard", name: "BARD", description: "Musical spellcaster and support", image: "/images/raceImages/Bard.png" },
-  { id: "Ranger", name: "RANGER", description: "Wilderness hunter and scout", image: "/images/raceImages/Ranger.png" },
+const CLASSES = [
+  { id: "Human", name: "HUMAN", description: "All ability scores +1", image: "/images/classImages/Human.png" },
+  { id: "Dwarf", name: "DWARF", description: "Constitution +2", image: "/images/classImages/dwarf.png" },
+  { id: "Elf", name: "ELF", description: "Dexterity +2", image: "/images/classImages/elf.png" },
+  { id: "Dragonborn", name: "DRAGONBORN", description: "Strength +2 Charisma +1", image: "/images/classImages/dragonborn.png" },
+  { id: "Tiefling", name: "TIELFLING", description: "Charisma +2", image: "/images/classImages/Tiefling.png" },
+  { id: "Half-Orc", name: "HALF-ORC", description: "Strength +2 Constitution +1", image: "/images/classImages/sorcerer.png" },
+  { id: "Half-Elf", name: "HALF-ELF", description: "Charisma +2 Two ability scores +1", image: "/images/classImages/half-elf.png" },
+  { id: "HalfLING", name: "HALFLING", description: "Dexterity +2", image: "/images/classImages/halfling.png" },
 ];
 
-export default function RacePage() {
+export default function ClassPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [accentColor, setAccentColor] = useState<string>("#00ffe0");
   const selectedRef = useRef<HTMLDivElement>(null!);
@@ -58,7 +54,7 @@ export default function RacePage() {
           />
         )}
 
-        {RACES.map((cls, index) => {
+        {CLASSES.map((cls, index) => {
           const isSelected = selectedId === cls.id;
           return (
             <ClassCard
