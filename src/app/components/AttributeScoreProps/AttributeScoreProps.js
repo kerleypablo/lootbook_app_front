@@ -24,7 +24,6 @@ export default function AbilityScore({
   label,
   base,
   bonuses = {},
-  min = 0,
   max = 20,
   disableIncrement,
   disableDecrement,
