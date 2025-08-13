@@ -6,7 +6,7 @@ import styles from "../css/stepNavigation.module.css";
 const steps = [
   "/characters/new/race",
   "/characters/new/class",
-  "/characters/new/attribute",
+  "/characters/new/Attribute",
   "/characters/new/background",
   "/characters/new/skills",
 ];
