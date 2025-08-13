@@ -43,9 +43,6 @@ export default function AttributesPage() {
   const selectedRef = useRef<HTMLDivElement>(null!);
   const [shadowTop, setShadowTop] = useState<number>(0);
 
-  accentColor
-  shadowTop
-  setAccentColor
   useEffect(() => {
     if (selectedRef.current) {
       setShadowTop(selectedRef.current.offsetTop);
