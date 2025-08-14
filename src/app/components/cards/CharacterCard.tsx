@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../css/CharacterCard.module.css";
 import Arrowicon from "@/assets/arrowicon.svg";
@@ -20,8 +20,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   level,
 }) => {
   const [boxShadowColor, setBoxShadowColor] = useState("rgba(0, 0, 0, 0.4)");
-  const imgRef = useRef<HTMLImageElement | null>(null);
-  console.log(Image)
+
   function getAverageColor(imageEl: HTMLImageElement) {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -34,16 +33,21 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     setBoxShadowColor(`rgba(${r}, ${g}, ${b}, 0.4)`);
   }
 
-  useEffect(() => {
-    const img = imgRef.current;
-    if (img && img.complete) getAverageColor(img);
-    else if (img) img.onload = () => getAverageColor(img);
-  }, [image]);
+  const handleLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    getAverageColor(e.currentTarget);
+  };
 
   return (
     <div className={styles.card} style={{ boxShadow: `0 0 30px ${boxShadowColor}` }}>
       <div className={styles.imageWrapper}>
-        <img ref={imgRef} src={image} alt={name} className={styles.image} />
+        <Image
+          src={image}
+          alt={name}
+          className={styles.image}
+          fill
+          sizes="100%"
+          onLoad={handleLoad}
+        />
       </div>
       <div className={styles.info}>
         <div>
@@ -60,4 +64,4 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   );
 };
 
-export default CharacterCard;
+export default React.memo(CharacterCard);
