@@ -54,7 +54,12 @@ export default function AttributesPage() {
   };
 
   return (
-    <div className="relative h-full flex flex-col bg-gray-900 text-white">
+    <div
+      className="relative h-full flex flex-col bg-gray-900 text-white"
+      data-accent={accentColor}
+      data-shadow-top={shadowTop}
+      data-has-setaccent={Boolean(setAccentColor)}
+      >
       <div className="flex-shrink-0 z-40 px-4 pt-4">
         <NavigationNewCharacter />
       </div>
