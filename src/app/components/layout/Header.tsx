@@ -15,21 +15,14 @@ const Header: React.FC<HeaderProps> = ({ profileName, profileImage }) => {
   return (
     <header className="w-full flex justify-between items-center p-4">
       <div className="flex items-center space-x-2">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center space-x-2"
-        >
-          {/* SVG como componente React */}
-          <div className="flex items-center justify-center w-15 h-8 text-teal-400">
-            <GoblinSymbol className="w-25 h-100 text-red-500" />
-          </div>
+        {/* SVG como componente React */}
+        <div className="flex items-center justify-center w-15 h-8 text-teal-400">
+          <GoblinSymbol className="w-25 h-100 text-red-500" />
+        </div>
 
-          <div className="flex items-center justify-center w-90 h-8 text-teal-400">
-            <Logo className="w-25 h-100 text-red-500" />
-          </div>
-        </motion.div>
+        <div className="flex items-center justify-center w-90 h-8 text-teal-400">
+          <Logo className="w-25 h-100 text-red-500" />
+        </div>
       </div>
 
       {/* Perfil do usuário */}

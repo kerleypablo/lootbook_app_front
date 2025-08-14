@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import NavigationNewCharacter from "../../../components/navigation/NavigationNewCharacter";
 import AttributeScore, { type AttributeKey } from "../../../components/AttributeScoreProps/AttributeScoreProps";
 import { useStepNavigation } from "../StepNavigationContext";
 
@@ -60,40 +59,34 @@ export default function AttributesPage() {
 
   return (
     <div
-      className="relative h-full flex flex-col bg-gray-900 text-white"
+      className="h-full overflow-y-auto px-4 text-white"
       data-accent={accentColor}
       data-shadow-top={shadowTop}
       data-has-setaccent={Boolean(setAccentColor)}
-      >
-      <div className="flex-shrink-0 z-40 px-4 pt-4">
-        <NavigationNewCharacter />
-      </div>
-
-      <div className="flex-1 overflow-y-auto px-4 mt-4 pb-20 relative">
-        <div className="relative z-10 max-w-[720px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
-            {ALL.map((k) => (
-              <AttributeScore
-                key={k}
-                id={k}
-                label={{
-                  STR: "Strength",
-                  DEX: "Dexterity",
-                  CON: "Constitution",
-                  INT: "Intelligence",
-                  WIS: "Wisdom",
-                  CHA: "Charisma",
-                }[k]}
-                base={baseScores[k]}
-                bonuses={getBonusesFor(k)}
-                min={8}
-                max={15}
-                disableIncrement={pointsRemaining <= 0}
-                onChange={(n) => handleChange(k, n)}
-                showBonusChip
-              />
-            ))}
-          </div>
+    >
+      <div className="relative z-10 max-w-[720px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
+          {ALL.map((k) => (
+            <AttributeScore
+              key={k}
+              id={k}
+              label={{
+                STR: "Strength",
+                DEX: "Dexterity",
+                CON: "Constitution",
+                INT: "Intelligence",
+                WIS: "Wisdom",
+                CHA: "Charisma",
+              }[k]}
+              base={baseScores[k]}
+              bonuses={getBonusesFor(k)}
+              min={8}
+              max={15}
+              disableIncrement={pointsRemaining <= 0}
+              onChange={(n) => handleChange(k, n)}
+              showBonusChip
+            />
+          ))}
         </div>
       </div>
     </div>

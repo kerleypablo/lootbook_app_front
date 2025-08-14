@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import ClassCard from "../../../components/cards/ClassCard";
-import NavigationNewCharacter from "../../../components/navigation/NavigationNewCharacter";
 import { useStepNavigation } from "../StepNavigationContext";
 
 const CLASSES = [
@@ -39,43 +38,37 @@ export default function ClassPage() {
   }, [selectedId, setIsNextEnabled]);
 
   return (
-    <div className="relative h-full flex flex-col bg-gray-900 text-white">
-      <div className="flex-shrink-0 z-40 px-4 pt-4">
-        <NavigationNewCharacter />
-      </div>
+    <div className="h-full overflow-y-auto px-4 text-white relative">
+      {selectedId && (
+        <div
+          className="absolute left-0 w-full z-0 transition-all duration-500 ease-in-out pointer-events-none"
+          style={{
+            height: "150px",
+            top: `${shadowTop - 15}px`,
+            backgroundColor: accentColor,
+            borderRadius: "10px",
+            filter: "blur(30px)",
+            opacity: 1.8,
+          }}
+        />
+      )}
 
-      <div className="flex-1 overflow-y-auto px-4 mt-4 pb-20 relative">
-        {selectedId && (
-          <div
-            className="absolute left-0 w-full z-0 transition-all duration-500 ease-in-out pointer-events-none"
-            style={{
-              height: "150px",
-              top: `${shadowTop - 15}px`,
-              backgroundColor: accentColor,
-              borderRadius: "10px",
-              filter: "blur(30px)",
-              opacity: 1.8,
-            }}
+      {CLASSES.map((cls, index) => {
+        const isSelected = selectedId === cls.id;
+        return (
+          <ClassCard
+            key={cls.id}
+            id={cls.id}
+            name={cls.name}
+            description={cls.description}
+            image={cls.image}
+            selected={isSelected}
+            accentColor={isSelected ? accentColor : undefined}
+            onSelect={(id, color) => handleSelect(id, index, color)}
+            innerRef={isSelected ? selectedRef : undefined}
           />
-        )}
-
-        {CLASSES.map((cls, index) => {
-          const isSelected = selectedId === cls.id;
-          return (
-            <ClassCard
-              key={cls.id}
-              id={cls.id}
-              name={cls.name}
-              description={cls.description}
-              image={cls.image}
-              selected={isSelected}
-              accentColor={isSelected ? accentColor : undefined}
-              onSelect={(id, color) => handleSelect(id, index, color)}
-              innerRef={isSelected ? selectedRef : undefined}
-            />
-          );
-        })}
-      </div>
+        );
+      })}
     </div>
   );
 }
