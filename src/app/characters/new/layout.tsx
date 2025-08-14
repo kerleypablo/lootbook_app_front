@@ -11,7 +11,7 @@ export default function CharactersLayout({
 }) {
   const pathname = usePathname();
 
-  const isCreating = pathname === "/characters/new";
+  const isCreating = pathname.startsWith("/characters/new");
 
   const animation = isCreating
     ? {
