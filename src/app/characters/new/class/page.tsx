@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ClassCard from "../../../components/cards/ClassCard";
 import NavigationNewCharacter from "../../../components/navigation/NavigationNewCharacter";
-import StepNavigation from "../../../components/navigation/StepNavigation";
+import { useStepNavigation } from "../StepNavigationContext";
 
 const CLASSES = [
   { id: "Human", name: "HUMAN", description: "All ability scores +1", image: "/images/classImages/Human.png" },
@@ -20,6 +20,7 @@ export default function ClassPage() {
   const [accentColor, setAccentColor] = useState<string>("#00ffe0");
   const selectedRef = useRef<HTMLDivElement>(null!);
   const [shadowTop, setShadowTop] = useState<number>(0);
+  const { setIsNextEnabled } = useStepNavigation();
 
   useEffect(() => {
     if (selectedRef.current) {
@@ -32,6 +33,10 @@ export default function ClassPage() {
     setSelectedId(id);
     if (color) setAccentColor(color);
   };
+
+  useEffect(() => {
+    setIsNextEnabled(!!selectedId);
+  }, [selectedId, setIsNextEnabled]);
 
   return (
     <div className="relative h-full flex flex-col bg-gray-900 text-white">
@@ -70,10 +75,6 @@ export default function ClassPage() {
             />
           );
         })}
-      </div>
-
-      <div className="fixed bottom-0 left-0 w-full px-4 py-4 bg-gray-900 border-t border-gray-800 z-50">
-        <StepNavigation isNextEnabled={!!selectedId} />
       </div>
     </div>
   );

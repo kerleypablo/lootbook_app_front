@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import NavigationNewCharacter from "../../../components/navigation/NavigationNewCharacter";
-import StepNavigation from "../../../components/navigation/StepNavigation";
 import AttributeScore, { type AttributeKey } from "../../../components/AttributeScoreProps/AttributeScoreProps";
+import { useStepNavigation } from "../StepNavigationContext";
 
 export default function AttributesPage() {
   // ----- (1) estado base dos atributos (o que o usuário altera com + e -)
@@ -42,12 +42,17 @@ export default function AttributesPage() {
   const [accentColor, setAccentColor] = useState<string>("#00ffe0");
   const selectedRef = useRef<HTMLDivElement>(null!);
   const [shadowTop, setShadowTop] = useState<number>(0);
+  const { setIsNextEnabled } = useStepNavigation();
 
   useEffect(() => {
     if (selectedRef.current) {
       setShadowTop(selectedRef.current.offsetTop);
     }
   }, []);
+
+  useEffect(() => {
+    setIsNextEnabled(true);
+  }, [setIsNextEnabled]);
 
   const handleChange = (key: AttributeKey, nextBase: number) => {
     setBaseScores((s) => ({ ...s, [key]: nextBase }));
@@ -90,11 +95,6 @@ export default function AttributesPage() {
             ))}
           </div>
         </div>
-      </div>
-
-      <div className="fixed bottom-0 left-0 w-full px-4 py-4 bg-gray-900 border-t border-gray-800 z-50">
-        {/* habilite "Próximo" quando sua validação de atributos estiver ok */}
-        <StepNavigation isNextEnabled={true} />
       </div>
     </div>
   );
