@@ -5,6 +5,7 @@ import Header from './components/layout/Header';
 import Navigation from './components/navigation/Navigation';
 import CharacterCarousel from './components/carousel/CharacterCarousel';
 import BottomNav from './components/layout/BottomNav';
+import DraggableCard from './components/DraggableCard';
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -30,6 +31,7 @@ export default function Home() {
         </div>
       </div>
     <BottomNav />
+    <DraggableCard />
     </motion.main>
   );
 }
