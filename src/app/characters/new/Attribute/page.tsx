@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import AttributeScore, { type AttributeKey } from "../../../components/AttributeScoreProps/AttributeScoreProps";
 import { useStepNavigation } from "../StepNavigationContext";
 
+const ALL: AttributeKey[] = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
 export default function AttributesPage() {
   // ----- (1) estado base dos atributos (o que o usuário altera com + e -)
   const [baseScores, setBaseScores] = useState<Record<AttributeKey, number>>({
@@ -26,7 +28,6 @@ export default function AttributesPage() {
   });
 
   // ----- (3) point-buy opcional (exibimos pontos restantes só p/ feedback)
-  const ALL: AttributeKey[] = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
   const pointsMax = 27;
   const pointsSpent = useMemo(() => {
     // custo padrão (assumindo base mínima 8); ajuste se quiser outra regra
