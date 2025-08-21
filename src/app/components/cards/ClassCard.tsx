@@ -1,7 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import styles from "../css/ClassCard.module.css";
+import DraggableCard from "./DraggableCard";
 
 interface ClassCardProps {
   id: string;
@@ -54,6 +55,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
   innerRef,
 }) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   const handleClick = () => {
     if (imgRef.current) {
@@ -83,8 +85,19 @@ const ClassCard: React.FC<ClassCardProps> = ({
       <div className={styles.overlay}>
         <h2>{name}</h2>
         <p>{description}</p>
-        {selected && <button className={styles.detailsButton}>Details</button>}
+        {selected && (
+          <button
+            className={styles.detailsButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDetails(true);
+            }}
+          >
+            Details
+          </button>
+        )}
       </div>
+      {showDetails && <DraggableCard onClose={() => setShowDetails(false)} />}
     </div>
   );
 };
