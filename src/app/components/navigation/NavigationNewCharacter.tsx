@@ -42,7 +42,10 @@ export default function NavigationNewCharacter() {
               className={`${styles.tabButton} ${
                 isActive ? styles.tabButtonActive : ""
               }`}
-              ref={(el) => (tabRefs.current[index] = el)}
+              ref={(el) => {
+                tabRefs.current[index] = el;
+              }}
+
             >
               {tab.label}
             </Link>
