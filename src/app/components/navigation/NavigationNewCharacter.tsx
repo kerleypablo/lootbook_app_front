@@ -45,6 +45,7 @@ export default function NavigationNewCharacter() {
               ref={(el) => {
                 tabRefs.current[index] = el;
               }}
+
             >
               {tab.label}
             </Link>
