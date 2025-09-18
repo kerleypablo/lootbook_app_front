@@ -1,6 +1,7 @@
-"use client";
-import React, { useRef, useState } from "react";
+﻿"use client";
+import { CSSProperties, FC, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { AnimatePresence } from "framer-motion";
 import styles from "../css/ClassCard.module.css";
 import DraggableCard from "./DraggableCard";
 
@@ -41,10 +42,10 @@ const getDominantColor = (imageElement: HTMLImageElement): string => {
   g = Math.floor(g / count);
   b = Math.floor(b / count);
 
-  return `rgb(${r}, ${g}, ${b})`;
+  return "rgb(" + r + ", " + g + ", " + b + ")";
 };
 
-const ClassCard: React.FC<ClassCardProps> = ({
+const ClassCard: FC<ClassCardProps> = ({
   id,
   name,
   description,
@@ -57,6 +58,12 @@ const ClassCard: React.FC<ClassCardProps> = ({
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
+  useEffect(() => {
+    if (!selected && showDetails) {
+      setShowDetails(false);
+    }
+  }, [selected, showDetails]);
+
   const handleClick = () => {
     if (imgRef.current) {
       const color = getDominantColor(imgRef.current);
@@ -66,12 +73,17 @@ const ClassCard: React.FC<ClassCardProps> = ({
     }
   };
 
+  const accentStyle: CSSProperties | undefined =
+    selected && accentColor
+      ? ({ "--accent-color": accentColor } as CSSProperties)
+      : undefined;
+
   return (
     <div
       className={`${styles.card} ${selected ? styles.active : ""}`}
       onClick={handleClick}
       ref={innerRef}
-      style={selected && accentColor ? { '--accent-color': accentColor } as React.CSSProperties : undefined}
+      style={accentStyle}
     >
       <div className={styles.imageWrapper}>
         <Image
@@ -97,7 +109,18 @@ const ClassCard: React.FC<ClassCardProps> = ({
           </button>
         )}
       </div>
-      {showDetails && <DraggableCard onClose={() => setShowDetails(false)} />}
+      <AnimatePresence>
+        {showDetails && (
+          <DraggableCard
+            key="class-details"
+            title={name}
+            description={description}
+            image={image}
+            accentColor={accentColor}
+            onClose={() => setShowDetails(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
