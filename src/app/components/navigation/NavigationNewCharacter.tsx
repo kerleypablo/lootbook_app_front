@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import styles from "../css/navigation.module.css"; // ou ajuste conforme o nome real do arquivo .module.css
+import styles from "../css/navigation.module.css";
 
 export default function NavigationNewCharacter() {
   const pathname = usePathname();
@@ -10,12 +10,12 @@ export default function NavigationNewCharacter() {
   const tabs = [
     { href: "/characters/new/race", label: "Race" },
     { href: "/characters/new/class", label: "Class" },
-    { href: "/characters/new/Attribute", label: "Attribute" },
+    { href: "/characters/new/attribute", label: "Attribute" },
     { href: "/characters/new/background", label: "Background" },
-    { href: "/characters/new/Skills", label: "Skills" },
+    { href: "/characters/new/skills", label: "Skills" },
   ];
 
-  const tabRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const tabRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const [underlineLeft, setUnderlineLeft] = useState(0);
   const underlineWidth = 13;
 
@@ -28,7 +28,7 @@ export default function NavigationNewCharacter() {
         activeTab.offsetLeft + activeTab.offsetWidth / 2 - underlineWidth / 2;
       setUnderlineLeft(left);
     }
-  }, [activeIndex]);
+  }, [activeIndex, underlineWidth]);
 
   return (
     <div className={styles.tabsWrapper}>
@@ -42,10 +42,9 @@ export default function NavigationNewCharacter() {
               className={`${styles.tabButton} ${
                 isActive ? styles.tabButtonActive : ""
               }`}
-              ref={(el) => {
-                tabRefs.current[index] = el;
+              ref={(element) => {
+                tabRefs.current[index] = element;
               }}
-
             >
               {tab.label}
             </Link>

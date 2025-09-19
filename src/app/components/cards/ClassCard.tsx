@@ -18,31 +18,38 @@ interface ClassCardProps {
 
 const getDominantColor = (imageElement: HTMLImageElement): string => {
   const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return "#ffffff";
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    return "#ffffff";
+  }
 
   const width = (canvas.width = imageElement.naturalWidth);
   const height = (canvas.height = imageElement.naturalHeight);
-  ctx.drawImage(imageElement, 0, 0, width, height);
+  context.drawImage(imageElement, 0, 0, width, height);
 
-  const imageData = ctx.getImageData(0, 0, width, height).data;
-  let r = 0,
-    g = 0,
-    b = 0,
-    count = 0;
+  const imageData = context.getImageData(0, 0, width, height).data;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  let count = 0;
 
-  for (let i = 0; i < imageData.length; i += 4 * 50) {
-    r += imageData[i];
-    g += imageData[i + 1];
-    b += imageData[i + 2];
-    count++;
+  for (let index = 0; index < imageData.length; index += 4 * 50) {
+    r += imageData[index];
+    g += imageData[index + 1];
+    b += imageData[index + 2];
+    count += 1;
   }
 
-  r = Math.floor(r / count);
-  g = Math.floor(g / count);
-  b = Math.floor(b / count);
+  if (count === 0) {
+    return "#ffffff";
+  }
 
-  return "rgb(" + r + ", " + g + ", " + b + ")";
+  const averageR = Math.floor(r / count);
+  const averageG = Math.floor(g / count);
+  const averageB = Math.floor(b / count);
+
+  return `rgb(${averageR}, ${averageG}, ${averageB})`;
 };
 
 const ClassCard: FC<ClassCardProps> = ({
@@ -55,7 +62,7 @@ const ClassCard: FC<ClassCardProps> = ({
   accentColor,
   innerRef,
 }) => {
-  const imgRef = useRef<HTMLImageElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
@@ -65,8 +72,8 @@ const ClassCard: FC<ClassCardProps> = ({
   }, [selected, showDetails]);
 
   const handleClick = () => {
-    if (imgRef.current) {
-      const color = getDominantColor(imgRef.current);
+    if (imageRef.current) {
+      const color = getDominantColor(imageRef.current);
       onSelect(id, color);
     } else {
       onSelect(id);
@@ -91,7 +98,7 @@ const ClassCard: FC<ClassCardProps> = ({
           alt={name}
           fill
           className={styles.image}
-          ref={imgRef}
+          ref={imageRef}
         />
       </div>
       <div className={styles.overlay}>
@@ -100,8 +107,8 @@ const ClassCard: FC<ClassCardProps> = ({
         {selected && (
           <button
             className={styles.detailsButton}
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={(event) => {
+              event.stopPropagation();
               setShowDetails(true);
             }}
           >
