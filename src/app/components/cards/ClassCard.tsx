@@ -13,7 +13,7 @@ interface ClassCardProps {
   selected: boolean;
   onSelect: (id: string, accentColor?: string) => void;
   accentColor?: string;
-  innerRef?: React.RefObject<HTMLDivElement>;
+  innerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 const getDominantColor = (imageElement: HTMLImageElement): string => {
