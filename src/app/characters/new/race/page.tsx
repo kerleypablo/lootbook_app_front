@@ -9,7 +9,7 @@ import { useStepNavigation } from "../StepNavigationContext";
 export default function RacePage() {
   const { selectedRaceId, selectRace, raceAccentColor } = useCharacterBuilder();
   const [accentColor, setAccentColor] = useState<string | null>(raceAccentColor);
-  const selectedRef = useRef<HTMLDivElement | null>(null);
+  const selectedRef = useRef<HTMLDivElement>(null);
   const [shadowTop, setShadowTop] = useState<number>(0);
   const { setIsNextEnabled } = useStepNavigation();
 
