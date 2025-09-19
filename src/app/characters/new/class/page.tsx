@@ -9,7 +9,7 @@ import { useStepNavigation } from "../StepNavigationContext";
 export default function ClassPage() {
   const { selectedClassId, selectClass, classAccentColor } = useCharacterBuilder();
   const [accentColor, setAccentColor] = useState<string | null>(classAccentColor);
-  const selectedRef = useRef<HTMLDivElement | null>(null);
+  const selectedRef = useRef<HTMLDivElement>(null);
   const [shadowTop, setShadowTop] = useState<number>(0);
   const { setIsNextEnabled } = useStepNavigation();
 
