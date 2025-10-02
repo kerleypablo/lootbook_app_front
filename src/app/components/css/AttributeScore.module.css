@@ -58,7 +58,7 @@
 .row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 13px;
   position: relative;
   z-index: 1; /* acima do fundo/glow */
 }
@@ -143,8 +143,12 @@
   justify-content: center;
   font-size: 12px;
 
-  /* centraliza no cÃ­rculo */
+  /* centraliza no círculo */
   top: 50%;
-  left: 3%;
-  transform: translate(-50%, -50%);
+  right: 4px;
+  left: auto;
+  transform: translate(50%, -50%);
 }
+
+
+

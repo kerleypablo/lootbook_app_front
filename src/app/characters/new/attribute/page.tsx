@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo } from "react";
 import AttributeScore from "../../../components/AttributeScoreProps/AttributeScoreProps";
@@ -53,8 +53,8 @@ export default function AttributesPage() {
                 }[key]}
                 base={baseAttributes[key]}
                 bonuses={{ race, class: classBonus }}
-                min={8}
-                max={15}
+                min={0}
+                max={20}
                 disableIncrement={pointsRemaining <= 0}
                 onChange={(value) => updateBaseAttribute(key, value)}
                 showBonusChip
