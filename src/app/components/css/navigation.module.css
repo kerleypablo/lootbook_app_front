@@ -1,4 +1,4 @@
-.container {
+﻿.container {
   width: 100%;
   margin-bottom: 1rem;
 }
@@ -9,7 +9,7 @@
 
 .searchInput {
   width: 100%;
-  background-color: #16171B;
+  background-color: #16171b;
   border-radius: 24px;
   padding: 0.75rem 2.5rem;
   font-size: 0.875rem;
@@ -47,10 +47,16 @@
   font-weight: 500;
   color: #6b7280;
   text-align: center;
+  transition: color 0.2s ease;
 }
 
 .tabButtonActive {
-  color: #ffffff;
+  color: rgb(var(--color-primary));
+}
+
+.tabButtonDisabled {
+  color: #4b5563;
+  cursor: not-allowed;
 }
 
 .underline {
@@ -59,7 +65,7 @@
   left: 0;
   width: 13px;
   height: 2px;
-  background-color: #14b8a6;
+  background-color: rgb(var(--color-primary));
   border-radius: 9999px;
   transition: left 0.3s ease;
 }
