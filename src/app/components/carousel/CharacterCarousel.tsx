@@ -1,8 +1,10 @@
-"use client";
-import React, { useCallback, useEffect, useState } from "react";
+﻿"use client";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import CharacterCard from "../cards/CharacterCard";
 import NewCharacterCard from "../cards/NewCharacterCard";
+import CharacterDetailOverlay from "../cards/CharacterDetailOverlay";
 import styles from "../css/CharacterCarousel.module.css";
 
 interface Character {
@@ -13,6 +15,10 @@ interface Character {
   level: number;
   image: string;
 }
+
+type SlideItem =
+  | ({ type: "character" } & Character)
+  | { type: "create"; id: string };
 
 const characters: Character[] = [
   {
@@ -44,6 +50,16 @@ const characters: Character[] = [
 const CharacterCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: "center", loop: false });
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [expandedCharacter, setExpandedCharacter] = useState<Character | null>(null);
+
+  const slides: SlideItem[] = useMemo(
+    () => [
+      { id: "new-start", type: "create" },
+      ...characters.map((item) => ({ ...item, type: "character" as const })),
+      { id: "new-end", type: "create" },
+    ],
+    []
+  );
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -56,41 +72,55 @@ const CharacterCarousel = () => {
     emblaApi.on("select", onSelect);
   }, [emblaApi, onSelect]);
 
- type SlideItem =
-  | ({ type: "character" } & Character)
-  | { type: "create"; id: string };
+  const handleCharacterClick = (character: Character) => {
+    setExpandedCharacter(character);
+  };
 
-const slides: SlideItem[] = [
-  { id: "new-start", type: "create" },
-  ...characters.map(c => ({ ...c, type: "character" as const })),
-  { id: "new-end", type: "create" }
-];
+  const handleCloseOverlay = () => {
+    setExpandedCharacter(null);
+  };
 
   return (
-    <div className={styles.embla} ref={emblaRef}>
-      <div className={styles.emblaContainer}>
-        {slides.map((slide, index) => (
-          <div
-            key={slide.id ?? index}
-            className={`${styles.emblaSlide} ${
-              index === selectedIndex ? styles.active : styles.inactive
-            }`}
-          >
-            {slide.type === "character" ? (
-              <CharacterCard
-                image={slide.image}
-                name={slide.name}
-                race={slide.race}
-                class={slide.class}
-                level={slide.level}
-              />
-            ) : (
-              <NewCharacterCard />
-            )}
-          </div>
-        ))}
+    <>
+      <div className={styles.embla} ref={emblaRef}>
+        <div className={styles.emblaContainer}>
+          {slides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`${styles.emblaSlide} ${
+                index === selectedIndex ? styles.active : styles.inactive
+              }`}
+            >
+              {slide.type === "character" ? (
+                <CharacterCard
+                  image={slide.image}
+                  name={slide.name}
+                  race={slide.race}
+                  class={slide.class}
+                  level={slide.level}
+                  onClick={() => handleCharacterClick(slide)}
+                />
+              ) : (
+                <NewCharacterCard />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <AnimatePresence>
+        {expandedCharacter && (
+          <CharacterDetailOverlay
+            character={{
+              id: expandedCharacter.id,
+              name: expandedCharacter.name,
+              image: expandedCharacter.image,
+            }}
+            onClose={handleCloseOverlay}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

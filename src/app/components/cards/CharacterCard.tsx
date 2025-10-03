@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+﻿"use client";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import styles from "../css/CharacterCard.module.css";
 import Arrowicon from "@/assets/arrowicon.svg";
@@ -10,6 +10,7 @@ interface CharacterCardProps {
   race: string;
   class: string;
   level: number;
+  onClick?: () => void;
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
@@ -18,10 +19,11 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   race,
   class: characterClass,
   level,
+  onClick,
 }) => {
   const [boxShadowColor, setBoxShadowColor] = useState("rgba(0, 0, 0, 0.4)");
 
-  function getAverageColor(imageEl: HTMLImageElement) {
+  const getAverageColor = useCallback((imageEl: HTMLImageElement) => {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
     if (!context) return;
@@ -31,14 +33,33 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     context.drawImage(imageEl, 0, 0, 1, 1);
     const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
     setBoxShadowColor(`rgba(${r}, ${g}, ${b}, 0.4)`);
-  }
+  }, []);
 
   const handleLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     getAverageColor(e.currentTarget);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!onClick) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onClick();
+    }
+  };
+
+  const cardClassName = onClick
+    ? `${styles.card} ${styles.cardInteractive}`
+    : styles.card;
+
   return (
-    <div className={styles.card} style={{ boxShadow: `0 0 30px ${boxShadowColor}` }}>
+    <div
+      className={cardClassName}
+      style={{ boxShadow: `0 0 30px ${boxShadowColor}` }}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
+    >
       <div className={styles.imageWrapper}>
         <Image
           src={image}
@@ -53,7 +74,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
         <div>
           <p className={styles.nameCard}>{name}</p>
           <p className={styles.infCard}>
-            {race} • {characterClass} • Nível {level}
+            {race} | {characterClass} | Nivel {level}
           </p>
         </div>
         <div className={styles.arrowCard}>
