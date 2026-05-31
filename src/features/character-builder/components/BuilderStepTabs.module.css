@@ -1,0 +1,41 @@
+.tabsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+
+.tabButton {
+  position: relative;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.tabButtonActive {
+  color: rgb(var(--color-primary));
+}
+
+.tabButtonDisabled {
+  color: #4b5563;
+  cursor: not-allowed;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 13px;
+  height: 2px;
+  background-color: rgb(var(--color-primary));
+  border-radius: 9999px;
+  transition: left 0.3s ease;
+}

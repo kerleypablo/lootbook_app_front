@@ -17,25 +17,3 @@ body {
       rgb(var(--background-end-rgb))
     );
 }
-
-.character-swiper {
-  width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-pagination-bullet {
-  background: #4b5563;
-  opacity: 0.5;
-}
-
-.swiper-pagination-bullet-active {
-  background: #2DD4BF;
-  opacity: 1;
-}
