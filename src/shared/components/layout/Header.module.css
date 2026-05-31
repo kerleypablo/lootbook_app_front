@@ -1,0 +1,77 @@
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.brandGroup {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brandIcon {
+  display: block;
+  flex-shrink: 0;
+  width: 44px;
+  height: 42px;
+  color: #ef4444;
+}
+
+.brandLogo {
+  display: block;
+  flex-shrink: 0;
+  width: 146px;
+  height: 35px;
+  color: #ef4444;
+}
+
+.profileGroup {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.profileText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  line-height: 1;
+}
+
+.profileLabel {
+  font-size: 14px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.profileName {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.profileAvatar {
+  width: 46px;
+  height: 46px;
+  margin-top: 4px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.profileAvatarImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

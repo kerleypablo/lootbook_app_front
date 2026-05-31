@@ -6,6 +6,7 @@ import Navigation from "@/features/home/components/Navigation";
 import BottomNav from "@/shared/components/layout/BottomNav";
 import Header from "@/shared/components/layout/Header";
 import styles from "@/app/page.module.css";
+import screenStyles from "./HomeScreen.module.css";
 
 export default function HomeScreen() {
   return (
@@ -21,11 +22,11 @@ export default function HomeScreen() {
           profileImage="/images/charles_lourance.png"
         />
 
-        <div className="mt-6">
+        <div className={screenStyles.navigationSection}>
           <Navigation />
         </div>
 
-        <div className="flex-2 flex items-center justify-center my-7">
+        <div className={screenStyles.carouselSection}>
           <CharacterCarousel />
         </div>
       </div>

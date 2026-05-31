@@ -3,6 +3,7 @@
 import type { CharacterOption } from "@/features/character-builder/types";
 import OptionCard from "./OptionCard";
 import SelectionHighlight from "./SelectionHighlight";
+import styles from "./OptionSelectionList.module.css";
 
 type OptionSelectionListProps = {
   items: CharacterOption[];
@@ -22,7 +23,7 @@ export default function OptionSelectionList({
   onSelect,
 }: OptionSelectionListProps) {
   return (
-    <div className="h-full overflow-y-auto px-4 text-white relative">
+    <div className={styles.list}>
       {selectedId && highlightColor && (
         <SelectionHighlight color={highlightColor} top={shadowTop} />
       )}
