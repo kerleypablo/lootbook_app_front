@@ -1,0 +1,231 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum CharacterStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum ItemType {
+  WEAPON
+  ARMOR
+  EQUIPMENT
+  CONSUMABLE
+  LOOT
+  CUSTOM
+}
+
+enum ActionType {
+  ATTACK
+  SPELL
+  SKILL
+  FEATURE
+  CUSTOM
+}
+
+enum EffectType {
+  BUFF
+  DEBUFF
+  PASSIVE
+  TRIGGERED
+  CUSTOM
+}
+
+enum LinkOperation {
+  ADD
+  SUBTRACT
+  SET_FROM_STAT
+  SUM_WEIGHTS
+  CONSUME_RESOURCE
+}
+
+model User {
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  authProviderId String      @unique @map("auth_provider_id")
+  email          String      @unique
+  displayName    String?     @map("display_name")
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+  characters     Character[]
+
+  @@map("users")
+}
+
+model CharacterTemplate {
+  id           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key          String      @unique
+  name         String
+  description  String?
+  systemFamily String?     @map("system_family")
+  isOfficial   Boolean     @default(false) @map("is_official")
+  configJson   Json?       @map("config_json")
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+  characters   Character[]
+
+  @@map("character_templates")
+}
+
+model Character {
+  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String              @map("user_id") @db.Uuid
+  templateId    String?             @map("template_id") @db.Uuid
+  name          String
+  level         Int                 @default(1)
+  status        CharacterStatus     @default(DRAFT)
+  portraitUrl   String?             @map("portrait_url")
+  summaryJson   Json?               @map("summary_json")
+  createdAt     DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
+  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template      CharacterTemplate?  @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  stats         CharacterStat[]
+  resources     CharacterResource[]
+  items         CharacterItem[]
+  actions       CharacterAction[]
+  effects       CharacterEffect[]
+  links         CharacterLink[]
+  notes         CharacterNote[]
+  snapshots     CharacterSnapshot[]
+
+  @@index([userId], map: "characters_user_id_idx")
+  @@index([templateId], map: "characters_template_id_idx")
+  @@map("characters")
+}
+
+model CharacterStat {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId  String    @map("character_id") @db.Uuid
+  key          String
+  label        String
+  baseValue    Decimal?  @map("base_value") @db.Decimal(10, 2)
+  currentValue Decimal?  @map("current_value") @db.Decimal(10, 2)
+  maxValue     Decimal?  @map("max_value") @db.Decimal(10, 2)
+  metaJson     Json?     @map("meta_json")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character    Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_stats_character_id_idx")
+  @@unique([characterId, key], map: "character_stats_character_id_key_key")
+  @@map("character_stats")
+}
+
+model CharacterResource {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId  String    @map("character_id") @db.Uuid
+  key          String
+  label        String
+  currentValue Decimal?  @map("current_value") @db.Decimal(10, 2)
+  maxValue     Decimal?  @map("max_value") @db.Decimal(10, 2)
+  resetRule    String?   @map("reset_rule")
+  metaJson     Json?     @map("meta_json")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character    Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_resources_character_id_idx")
+  @@unique([characterId, key], map: "character_resources_character_id_key_key")
+  @@map("character_resources")
+}
+
+model CharacterItem {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId String    @map("character_id") @db.Uuid
+  name        String
+  type        ItemType
+  equipped    Boolean   @default(false)
+  quantity    Int       @default(1)
+  weight      Decimal?  @db.Decimal(10, 2)
+  metaJson    Json?     @map("meta_json")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_items_character_id_idx")
+  @@map("character_items")
+}
+
+model CharacterAction {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId String    @map("character_id") @db.Uuid
+  name       String
+  actionType ActionType @map("action_type")
+  costJson   Json?      @map("cost_json")
+  rollJson   Json?      @map("roll_json")
+  damageJson Json?      @map("damage_json")
+  metaJson   Json?      @map("meta_json")
+  createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character  Character  @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_actions_character_id_idx")
+  @@map("character_actions")
+}
+
+model CharacterEffect {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId String     @map("character_id") @db.Uuid
+  sourceType  String     @map("source_type")
+  sourceLabel String     @map("source_label")
+  effectType  EffectType @map("effect_type")
+  payloadJson Json       @map("payload_json")
+  active      Boolean    @default(true)
+  createdAt   DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character   Character  @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_effects_character_id_idx")
+  @@map("character_effects")
+}
+
+model CharacterLink {
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId String        @map("character_id") @db.Uuid
+  sourceType  String        @map("source_type")
+  sourceId    String        @map("source_id")
+  targetType  String        @map("target_type")
+  targetId    String        @map("target_id")
+  operation   LinkOperation
+  configJson  Json?         @map("config_json")
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character   Character     @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_links_character_id_idx")
+  @@map("character_links")
+}
+
+model CharacterNote {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId String    @map("character_id") @db.Uuid
+  section     String
+  content     String
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_notes_character_id_idx")
+  @@map("character_notes")
+}
+
+model CharacterSnapshot {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  characterId      String    @map("character_id") @db.Uuid
+  version          Int
+  derivedStateJson Json      @map("derived_state_json")
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  character        Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@index([characterId], map: "character_snapshots_character_id_idx")
+  @@unique([characterId, version], map: "character_snapshots_character_id_version_key")
+  @@map("character_snapshots")
+}

@@ -17,6 +17,10 @@
 /.next/
 /out/
 .local-run/
+/frontend/.next/
+/frontend/out/
+/backend/dist/
+/backend/node_modules/
 
 # production
 /build
@@ -25,6 +29,8 @@
 .DS_Store
 *.pem
 *.zip
+/frontend/node_modules/
+/backend/prisma/schema-engine-windows.exe
 
 # debug
 npm-debug.log*
@@ -41,3 +47,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.local-run/next-dev.log
