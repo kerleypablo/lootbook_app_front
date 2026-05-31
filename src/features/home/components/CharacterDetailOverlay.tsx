@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FiChevronLeft, FiHeart } from "react-icons/fi";
+import StatsPanel from "./StatsPanel";
 import styles from "./CharacterDetailOverlay.module.css";
 
 export type CharacterDetail = {
@@ -24,6 +25,14 @@ export default function CharacterDetailOverlay({
   onClose,
 }: CharacterDetailOverlayProps) {
   const [isCompact, setIsCompact] = useState(false);
+  const mockStats = {
+    STR: 17,
+    DEX: 10,
+    CON: 16,
+    INT: 9,
+    WIS: 12,
+    CHA: 11,
+  } as const;
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsCompact(true), 320);
@@ -110,7 +119,16 @@ export default function CharacterDetailOverlay({
                 <FiHeart size={20} />
               </button>
             </div>
-            <div className={styles.infoPlaceholder} />
+            <StatsPanel stats={mockStats} />
+            <div className={styles.infoBlock}>
+              <p className={styles.infoBlockTitle}>Lore</p>
+              <p className={styles.infoBlockBody}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                feugiat, eros non feugiat fermentum, justo lorem faucibus
+                libero, vitae faucibus purus leo vitae turpis. Morbi accumsan
+                iaculis tortor, nec viverra est feugiat vel.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </motion.div>

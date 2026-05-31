@@ -100,6 +100,7 @@
   flex-direction: column;
   gap: 1.5rem;
   color: #ffffff;
+  overflow-y: auto;
 }
 
 .infoHeader {
@@ -129,9 +130,26 @@
   transform: translateY(-1px);
 }
 
-.infoPlaceholder {
-  flex: 1;
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1rem 1.125rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 22px;
-  border: 1px dashed rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.03);
+}
+
+.infoBlockTitle {
+  color: rgb(var(--color-primary));
+  font-family: Acme, "Noto Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.infoBlockBody {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.875rem;
+  line-height: 1.65;
 }
