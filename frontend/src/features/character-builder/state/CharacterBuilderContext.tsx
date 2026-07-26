@@ -18,8 +18,11 @@ const DEFAULT_BASE_ATTRIBUTES: Record<AttributeKey, number> = {
 };
 
 type CharacterBuilderActions = {
+  setCharacterName: (name: string) => void;
   selectRace: (id: string | null, accentColor?: string | null) => void;
   selectClass: (id: string | null, accentColor?: string | null) => void;
+  setBackground: (background: string) => void;
+  toggleSkill: (skill: string) => void;
   updateBaseAttribute: (key: AttributeKey, value: number) => void;
   reset: () => void;
 };
@@ -50,14 +53,21 @@ export function CharacterBuilderProvider({
   children: React.ReactNode;
 }) {
   const [state, setState] = useState<CharacterBuilderState>(() => ({
+    characterName: "",
     selectedRaceId: null,
     selectedClassId: null,
+    background: "Adventurer",
+    selectedSkills: [],
     baseAttributes: { ...DEFAULT_BASE_ATTRIBUTES },
     raceBonuses: {},
     classBonuses: {},
     raceAccentColor: null,
     classAccentColor: null,
   }));
+
+  const setCharacterName = useCallback((characterName: string) => {
+    setState((prev) => ({ ...prev, characterName }));
+  }, []);
 
   const selectRace = useCallback((id: string | null, accentColor?: string | null) => {
     setState((prev) => ({
@@ -90,10 +100,26 @@ export function CharacterBuilderProvider({
     }));
   }, []);
 
+  const setBackground = useCallback((background: string) => {
+    setState((prev) => ({ ...prev, background }));
+  }, []);
+
+  const toggleSkill = useCallback((skill: string) => {
+    setState((prev) => ({
+      ...prev,
+      selectedSkills: prev.selectedSkills.includes(skill)
+        ? prev.selectedSkills.filter((item) => item !== skill)
+        : [...prev.selectedSkills, skill],
+    }));
+  }, []);
+
   const reset = useCallback(() => {
     setState({
+      characterName: "",
       selectedRaceId: null,
       selectedClassId: null,
+      background: "Adventurer",
+      selectedSkills: [],
       baseAttributes: { ...DEFAULT_BASE_ATTRIBUTES },
       raceBonuses: {},
       classBonuses: {},
@@ -113,12 +139,15 @@ export function CharacterBuilderProvider({
 
   const value = useMemo<CharacterBuilderContextValue>(() => ({
     ...state,
+    setCharacterName,
     selectRace,
     selectClass,
+    setBackground,
+    toggleSkill,
     updateBaseAttribute,
     reset,
     getCombinedBonuses,
-  }), [state, selectRace, selectClass, updateBaseAttribute, reset, getCombinedBonuses]);
+  }), [state, setCharacterName, selectRace, selectClass, setBackground, toggleSkill, updateBaseAttribute, reset, getCombinedBonuses]);
 
   return (
     <CharacterBuilderContext.Provider value={value}>

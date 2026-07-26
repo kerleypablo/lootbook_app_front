@@ -943,3 +943,18 @@ A base sera considerada pronta quando:
 - `GET /characters/:id/sheet` existir
 - snapshots de estado derivado existirem
 - a arquitetura estiver pronta para templates mais ricos no futuro
+
+## 14. Documentacao de entrega da API
+
+Esta documentacao deve ser criada apos a conclusao das tasks 1 a 8.
+
+Deve cobrir:
+- endpoints, metodos, autenticacao e exemplos de payload
+- contratos de resposta e erros da API
+- regras de ownership e autorizacao
+- responsabilidade de cada modulo do backend
+- regras de templates, estado base, estado derivado, links e recalculo
+- como o frontend deve consumir a ficha agregada
+
+Pronto quando:
+- uma pessoa nova no projeto conseguir entender e consumir a API sem depender da leitura do codigo

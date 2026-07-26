@@ -1,40 +1,99 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { AppError } from "../../shared/errors/app-error.js";
+import { TemplateRepository } from "../templates/repository.js";
+import { CharacterRepository } from "./repository.js";
+import { CharacterService } from "./service.js";
+import type {
+  CharacterIdParams,
+  CreateCharacterInput,
+  UpdateCharacterInput,
+} from "./types.js";
 
-async function notImplemented(reply: FastifyReply, message: string) {
-  return reply.status(501).send({ message });
+function createService(request: FastifyRequest) {
+  return new CharacterService(
+    new CharacterRepository(request.server.prisma),
+    new TemplateRepository(request.server.prisma),
+  );
+}
+
+function getUserId(request: FastifyRequest): string {
+  if (!request.user) {
+    request.log.error("Character route reached controller without request.user");
+    throw new AppError(
+      500,
+      "Authenticated user context was not initialized",
+      undefined,
+      "AuthenticationContextError",
+    );
+  }
+
+  return request.user.id;
 }
 
 export async function createCharacterController(
-  _request: FastifyRequest,
+  request: FastifyRequest<{ Body: CreateCharacterInput }>,
   reply: FastifyReply,
 ) {
-  return notImplemented(reply, "Character creation not implemented yet");
+  const character = await createService(request).create(
+    getUserId(request),
+    request.body,
+    request.log,
+  );
+
+  return reply.status(201).send({ character });
 }
 
 export async function listCharactersController(
-  _request: FastifyRequest,
+  request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  return notImplemented(reply, "Character listing not implemented yet");
+  const characters = await createService(request).list(
+    getUserId(request),
+    request.log,
+  );
+
+  return reply.status(200).send({ characters });
 }
 
 export async function getCharacterController(
-  _request: FastifyRequest,
+  request: FastifyRequest<{ Params: CharacterIdParams }>,
   reply: FastifyReply,
 ) {
-  return notImplemented(reply, "Character fetch not implemented yet");
+  const character = await createService(request).get(
+    getUserId(request),
+    request.params.id,
+    request.log,
+  );
+
+  return reply.status(200).send({ character });
 }
 
 export async function updateCharacterController(
-  _request: FastifyRequest,
+  request: FastifyRequest<{
+    Params: CharacterIdParams;
+    Body: UpdateCharacterInput;
+  }>,
   reply: FastifyReply,
 ) {
-  return notImplemented(reply, "Character update not implemented yet");
+  const character = await createService(request).update(
+    getUserId(request),
+    request.params.id,
+    request.body,
+    request.log,
+  );
+
+  return reply.status(200).send({ character });
 }
 
 export async function deleteCharacterController(
-  _request: FastifyRequest,
+  request: FastifyRequest<{ Params: CharacterIdParams }>,
   reply: FastifyReply,
 ) {
-  return notImplemented(reply, "Character deletion not implemented yet");
+  await createService(request).delete(
+    getUserId(request),
+    request.params.id,
+    request.log,
+  );
+
+  return reply.status(204).send();
 }

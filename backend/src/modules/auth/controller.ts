@@ -1,10 +1,25 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { AppError } from "../../shared/errors/app-error.js";
 
 export async function validateSessionController(
-  _request: FastifyRequest,
+  request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  return reply.status(501).send({
-    message: "Auth validation not implemented yet",
+  if (!request.user || !request.auth) {
+    request.log.error(
+      "Authenticated route reached controller without request.user/request.auth",
+    );
+
+    throw new AppError(
+      500,
+      "Authenticated context was not initialized",
+      undefined,
+      "AuthenticationContextError",
+    );
+  }
+
+  return reply.status(200).send({
+    user: request.user,
+    auth: request.auth,
   });
 }

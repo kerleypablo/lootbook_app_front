@@ -1,10 +1,15 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { TemplateRepository } from "./repository.js";
+import { TemplateService } from "./service.js";
 
 export async function listTemplatesController(
-  _request: FastifyRequest,
+  request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  return reply.status(501).send({
-    message: "Template listing not implemented yet",
+  const service = new TemplateService(new TemplateRepository(request.server.prisma));
+  const templates = await service.listTemplates(request.log);
+
+  return reply.status(200).send({
+    templates,
   });
 }

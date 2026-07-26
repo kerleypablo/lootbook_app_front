@@ -7,7 +7,7 @@ import StatsPanel from "./StatsPanel";
 import styles from "./CharacterDetailOverlay.module.css";
 
 export type CharacterDetail = {
-  id: number;
+  id: string | number;
   name: string;
   image: string;
 };

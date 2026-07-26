@@ -6,11 +6,32 @@ import {
   listCharactersController,
   updateCharacterController,
 } from "./controller.js";
+import { characterSchemas } from "./schema.js";
 
-export function registerCharacterRoutes(app: FastifyInstance) {
-  app.post("/", createCharacterController);
-  app.get("/", listCharactersController);
-  app.get("/:id", getCharacterController);
-  app.patch("/:id", updateCharacterController);
-  app.delete("/:id", deleteCharacterController);
+export async function registerCharacterRoutes(app: FastifyInstance) {
+  app.post("/", {
+    preHandler: app.authenticate,
+    schema: characterSchemas.create,
+    handler: createCharacterController,
+  });
+  app.get("/", {
+    preHandler: app.authenticate,
+    schema: characterSchemas.list,
+    handler: listCharactersController,
+  });
+  app.get("/:id", {
+    preHandler: app.authenticate,
+    schema: characterSchemas.get,
+    handler: getCharacterController,
+  });
+  app.patch("/:id", {
+    preHandler: app.authenticate,
+    schema: characterSchemas.update,
+    handler: updateCharacterController,
+  });
+  app.delete("/:id", {
+    preHandler: app.authenticate,
+    schema: characterSchemas.delete,
+    handler: deleteCharacterController,
+  });
 }

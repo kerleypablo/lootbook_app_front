@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { listTemplatesController } from "./controller.js";
+import { templateSchemas } from "./schema.js";
 
-export function registerTemplateRoutes(app: FastifyInstance) {
-  app.get("/", listTemplatesController);
+export async function registerTemplateRoutes(app: FastifyInstance) {
+  app.get("/", { schema: templateSchemas.list }, listTemplatesController);
 }

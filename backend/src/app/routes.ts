@@ -12,22 +12,22 @@ import { registerLinkRoutes } from "../modules/links/route.js";
 import { registerNoteRoutes } from "../modules/notes/route.js";
 import { registerSnapshotRoutes } from "../modules/snapshots/route.js";
 
-export function registerCoreRoutes(app: FastifyInstance) {
+export async function registerCoreRoutes(app: FastifyInstance) {
   app.get("/health", async () => ({
     status: "ok",
     service: "lootbook-backend",
   }));
 
-  app.register(registerAuthRoutes, { prefix: "/auth" });
-  app.register(registerUserRoutes);
-  app.register(registerTemplateRoutes, { prefix: "/templates" });
-  app.register(registerCharacterRoutes, { prefix: "/characters" });
-  app.register(registerStatRoutes, { prefix: "/characters" });
-  app.register(registerResourceRoutes, { prefix: "/characters" });
-  app.register(registerItemRoutes, { prefix: "/characters" });
-  app.register(registerActionRoutes, { prefix: "/characters" });
-  app.register(registerEffectRoutes, { prefix: "/characters" });
-  app.register(registerLinkRoutes, { prefix: "/characters" });
-  app.register(registerNoteRoutes, { prefix: "/characters" });
-  app.register(registerSnapshotRoutes, { prefix: "/characters" });
+  await app.register(registerAuthRoutes, { prefix: "/auth" });
+  await app.register(registerUserRoutes);
+  await app.register(registerTemplateRoutes, { prefix: "/templates" });
+  await app.register(registerCharacterRoutes, { prefix: "/characters" });
+  await app.register(registerStatRoutes, { prefix: "/characters" });
+  await app.register(registerResourceRoutes, { prefix: "/characters" });
+  await app.register(registerItemRoutes, { prefix: "/characters" });
+  await app.register(registerActionRoutes, { prefix: "/characters" });
+  await app.register(registerEffectRoutes, { prefix: "/characters" });
+  await app.register(registerLinkRoutes, { prefix: "/characters" });
+  await app.register(registerNoteRoutes, { prefix: "/characters" });
+  await app.register(registerSnapshotRoutes, { prefix: "/characters" });
 }

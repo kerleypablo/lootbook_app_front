@@ -8,7 +8,7 @@ import CharacterDetailOverlay from "./CharacterDetailOverlay";
 import styles from "./CharacterCarousel.module.css";
 
 interface Character {
-  id: number;
+  id: string | number;
   name: string;
   race: string;
   class: string;
@@ -20,7 +20,7 @@ type SlideItem =
   | ({ type: "character" } & Character)
   | { type: "create"; id: string };
 
-const characters: Character[] = [
+const DEMO_CHARACTERS: Character[] = [
   {
     id: 1,
     name: "Charles Lourance",
@@ -47,18 +47,88 @@ const characters: Character[] = [
   },
 ];
 
+type ApiCharacter = {
+  id: string;
+  name: string;
+  level: number;
+  portraitUrl: string | null;
+  summaryJson: unknown;
+};
+
+function getSummaryName(summaryJson: unknown, key: "race" | "class") {
+  if (!summaryJson || typeof summaryJson !== "object") return "Unknown";
+
+  const identity = (summaryJson as { identity?: unknown }).identity;
+  if (!identity || typeof identity !== "object") return "Unknown";
+
+  const value = (identity as Record<string, unknown>)[key];
+  if (!value || typeof value !== "object") return "Unknown";
+
+  const name = (value as { name?: unknown }).name;
+  return typeof name === "string" ? name : "Unknown";
+}
+
+function mapApiCharacter(character: ApiCharacter): Character {
+  return {
+    id: character.id,
+    name: character.name,
+    race: getSummaryName(character.summaryJson, "race"),
+    class: getSummaryName(character.summaryJson, "class"),
+    level: character.level,
+    image: character.portraitUrl || "/images/charles_lourance.png",
+  };
+}
+
 const CharacterCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: "center", loop: false });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [expandedCharacter, setExpandedCharacter] = useState<Character | null>(null);
+  const [savedCharacters, setSavedCharacters] = useState<Character[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadCharacters() {
+      try {
+        const response = await fetch("/api/lootbook/characters");
+        const body: unknown = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          console.error("Failed to load saved characters", {
+            status: response.status,
+            body,
+          });
+          return;
+        }
+
+        const characters = (body as { characters?: unknown }).characters;
+        if (!Array.isArray(characters)) {
+          console.error("Invalid characters response from backend", { body });
+          return;
+        }
+
+        if (isMounted) {
+          setSavedCharacters(characters.map((character) => mapApiCharacter(character as ApiCharacter)));
+        }
+      } catch (error) {
+        console.error("Network error while loading saved characters", { error });
+      }
+    }
+
+    void loadCharacters();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const slides: SlideItem[] = useMemo(
     () => [
       { id: "new-start", type: "create" },
-      ...characters.map((item) => ({ ...item, type: "character" as const })),
+      ...DEMO_CHARACTERS.map((item) => ({ ...item, type: "character" as const })),
+      ...savedCharacters.map((item) => ({ ...item, type: "character" as const })),
       { id: "new-end", type: "create" },
     ],
-    [],
+    [savedCharacters],
   );
 
   const onSelect = useCallback(() => {
