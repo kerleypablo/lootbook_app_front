@@ -85,7 +85,20 @@ export class AuthService {
     accessToken: string,
     logger: FastifyBaseLogger,
   ): Promise<AuthProviderIdentity> {
-    const header = decodeProtectedHeader(accessToken);
+    let header: ReturnType<typeof decodeProtectedHeader>;
+
+    try {
+      header = decodeProtectedHeader(accessToken);
+    } catch (error) {
+      logger.warn({ err: error }, "Received a malformed access token");
+      throw new AppError(
+        401,
+        "Invalid or expired access token",
+        undefined,
+        "AuthenticationError",
+      );
+    }
+
     const algorithm = typeof header.alg === "string" ? header.alg : null;
 
     if (this.remoteJwks && algorithm && algorithm !== "HS256") {

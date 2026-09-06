@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 type Env = {
+  NODE_ENV: string;
   HOST: string;
   PORT: number;
   LOG_LEVEL: string;
@@ -27,11 +28,35 @@ function optionalEnv(name: string) {
   return value && value.trim().length > 0 ? value : undefined;
 }
 
+function parseBooleanEnv(name: string, fallback: boolean) {
+  const value = optionalEnv(name);
+
+  if (value === undefined) {
+    return fallback;
+  }
+
+  if (value !== "true" && value !== "false") {
+    throw new Error(`${name} must be either "true" or "false"`);
+  }
+
+  return value === "true";
+}
+
+const nodeEnv = process.env.NODE_ENV ?? "development";
+const authRequired = parseBooleanEnv("AUTH_REQUIRED", nodeEnv !== "development");
+
+if (!authRequired && nodeEnv !== "development") {
+  throw new Error(
+    "AUTH_REQUIRED=false is only allowed when NODE_ENV=development",
+  );
+}
+
 export const env: Env = {
+  NODE_ENV: nodeEnv,
   HOST: process.env.HOST ?? "0.0.0.0",
   PORT: Number(process.env.PORT ?? 3333),
   LOG_LEVEL: process.env.LOG_LEVEL ?? "info",
-  AUTH_REQUIRED: process.env.AUTH_REQUIRED === "true",
+  AUTH_REQUIRED: authRequired,
   DATABASE_URL: requireEnv("DATABASE_URL"),
   DIRECT_URL: requireEnv("DIRECT_URL"),
   SUPABASE_URL: optionalEnv("SUPABASE_URL"),
