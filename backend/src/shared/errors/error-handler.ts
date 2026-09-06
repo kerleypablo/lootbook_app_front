@@ -1,4 +1,4 @@
-import type { FastifyInstance } from "fastify";
+import type { FastifyError, FastifyInstance } from "fastify";
 import { AppError } from "./app-error.js";
 
 export function registerErrorHandler(app: FastifyInstance) {
@@ -17,7 +17,7 @@ export function registerErrorHandler(app: FastifyInstance) {
     });
   });
 
-  app.setErrorHandler((error, request, reply) => {
+  app.setErrorHandler<FastifyError | AppError>((error, request, reply) => {
     if (error instanceof AppError) {
       request.log.warn(
         {
