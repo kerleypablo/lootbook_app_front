@@ -12,6 +12,7 @@
     "start": "node dist/app/server.js",
     "lint": "eslint \"src/**/*.ts\" \"scripts/**/*.mjs\"",
     "test:auth:e2e": "npm run build && node scripts/auth-e2e.mjs",
+    "test:rls:e2e": "npm run build && node scripts/rls-e2e.mjs",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy"
