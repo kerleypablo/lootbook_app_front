@@ -1,0 +1,55 @@
+:root {
+  /* Typography */
+  --font-family-display: var(--font-acme), Acme, system-ui, sans-serif;
+  --font-family-body: var(--font-open-sans), "Open Sans", "Noto Sans", system-ui, sans-serif;
+  --font-size-3xs: 10px;
+  --font-size-2xs: 12px;
+  --font-size-xs: 13px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 40px;
+  --line-height-tight: 1;
+  --line-height-body: 1.5;
+  --line-height-relaxed: 1.7;
+  --line-height-control: 24px;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.08em;
+  --letter-spacing-wider: 0.14em;
+
+  /* Layout */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --radius-none: 0;
+  --radius-sm: 16px;
+  --radius-md: 24px;
+  --radius-lg: 32px;
+  --radius-pill: 9999px;
+  --border-width-hairline: 1px;
+  --border-width-default: 1.5px;
+  --size-icon-sm: 16px;
+  --size-icon-md: 18px;
+  --size-icon-lg: 24px;
+  --size-control-sm: 40px;
+  --size-control-md: 48px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1440px;
+  --effect-shiny: 0 6.875px 9.375px rgb(2 212 177 / 20%),
+    0 5.625px 28.75px rgb(2 212 177 / 12%),
+    0 15px 23.75px rgb(2 212 177 / 14%);
+}

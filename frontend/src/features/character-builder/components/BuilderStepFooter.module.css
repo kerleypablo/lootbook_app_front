@@ -1,9 +1,9 @@
 .button {
   width: 86px;
   height: 48px;
-  border-radius: 32px;
-  padding: 12px 24px;
-  gap: 8px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-6);
+  gap: var(--space-2);
   border-width: 1.5px;
   border-style: solid;
   background: linear-gradient(
@@ -12,10 +12,10 @@
     rgba(2, 212, 177, 0.2) 100%
   );
   color: #00bfa6;
-  font-family: "Acme", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-control);
   text-align: center;
   transition: all 100ms ease-in-out;
   display: flex;
@@ -43,10 +43,10 @@
   border: 1.5px solid rgba(255, 255, 255, 1);
   background: none;
   color: #ffffff;
-  font-family: "Acme", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-control);
   letter-spacing: 0;
   text-align: center;
 }
@@ -55,17 +55,17 @@
   background: #014c43;
   border: none;
   color: #ffffff;
-  font-family: "Acme", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-control);
   text-align: center;
   transition: all 100ms ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 32px;
-  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-6);
 }
 
 .buttonFlat:active {

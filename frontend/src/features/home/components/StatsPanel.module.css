@@ -69,7 +69,7 @@
 .statModifier {
   padding: 2px 8px;
   border-radius: 9999px;
-  background: rgba(2, 212, 177, 0.094);
+  background: color-mix(in srgb, var(--color-accent-default) 9.4%, transparent);
   color: rgb(2, 212, 177);
   font-family: Acme, "Noto Sans", system-ui, sans-serif;
   font-size: 13px;
@@ -114,7 +114,7 @@
 .modPill {
   padding: 3px 10px;
   border-radius: 9999px;
-  background: rgba(2, 212, 177, 0.094);
+  background: color-mix(in srgb, var(--color-accent-default) 9.4%, transparent);
   color: rgb(2, 212, 177);
   font-family: Acme, "Noto Sans", system-ui, sans-serif;
   font-size: 13px;
@@ -137,6 +137,6 @@
 }
 
 .iconBoxFeat {
-  background: rgba(2, 212, 177, 0.094);
+  background: color-mix(in srgb, var(--color-accent-default) 9.4%, transparent);
   color: rgb(2, 212, 177);
 }

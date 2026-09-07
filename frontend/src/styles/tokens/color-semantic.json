@@ -1,0 +1,22 @@
+{
+  "$description": "Lootbook semantic colour tokens. Dark theme only.",
+  "color": {
+    "surface": {
+      "page-top": { "$value": "#1F2228" }, "page-bottom": { "$value": "#16191D" }, "raised": { "$value": "#24282F" }, "sunken": { "$value": "#151617" }, "overlay": { "$value": "#0C0F14" }
+    },
+    "content": {
+      "primary": { "$value": "{color.neutral.00}" }, "secondary": { "$value": "{color.neutral.30}" }, "muted": { "$value": "{color.neutral.50}" }, "disabled": { "$value": "{color.neutral.70}" }, "on-accent": { "$value": "{color.surface.overlay}" }
+    },
+    "accent": {
+      "default": { "$value": "{color.teal.50}" }, "hover": { "$value": "{color.teal.40}" }, "pressed": { "$value": "{color.teal.60}" }, "muted": { "$value": "{color.teal.70}" }, "subtle": { "$value": "{color.teal.80}" }
+    },
+    "border": {
+      "subtle": { "$value": "rgba(255, 255, 255, 0.08)" }, "default": { "$value": "rgba(255, 255, 255, 0.15)" }, "strong": { "$value": "{color.neutral.80}" }, "accent": { "$value": "{color.teal.50}" }
+    },
+    "feedback": {
+      "success": { "$value": "{color.feedback.success.2}" }, "success-subtle": { "$value": "{color.feedback.success.1}" }, "success-strong": { "$value": "{color.feedback.success.3}" },
+      "warning": { "$value": "{color.feedback.warning.2}" }, "warning-subtle": { "$value": "{color.feedback.warning.1}" }, "warning-strong": { "$value": "{color.feedback.warning.3}" },
+      "error": { "$value": "{color.feedback.error.1}" }, "error-subtle": { "$value": "{color.feedback.error.1}" }, "error-strong": { "$value": "{color.feedback.error.3}" }
+    }
+  }
+}

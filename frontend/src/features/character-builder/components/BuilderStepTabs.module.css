@@ -15,17 +15,17 @@
   padding: 0.5rem 0.25rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--color-content-muted);
   text-align: center;
   transition: color 0.2s ease;
 }
 
 .tabButtonActive {
-  color: rgb(var(--color-primary));
+  color: var(--color-accent-default);
 }
 
 .tabButtonDisabled {
-  color: #4b5563;
+  color: var(--color-content-disabled);
   cursor: not-allowed;
 }
 
@@ -35,7 +35,7 @@
   left: 0;
   width: 13px;
   height: 2px;
-  background-color: rgb(var(--color-primary));
+  background-color: var(--color-accent-default);
   border-radius: 9999px;
   transition: left 0.3s ease;
 }

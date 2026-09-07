@@ -117,7 +117,7 @@
   border-radius: 50%;
   border: none;
   background: rgba(20, 184, 212, 0.14);
-  color: rgb(var(--color-primary));
+  color: var(--color-accent-default);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,7 +141,7 @@
 }
 
 .infoBlockTitle {
-  color: rgb(var(--color-primary));
+  color: var(--color-accent-default);
   font-family: Acme, "Noto Sans", system-ui, sans-serif;
   font-size: 1rem;
   letter-spacing: 0.08em;

@@ -1,0 +1,16 @@
+{
+  "$description": "Lootbook colour primitives imported from the approved design-token export.",
+  "color": {
+    "teal": { "20": { "$value": "#A3FFF0" }, "30": { "$value": "#68FDE4" }, "40": { "$value": "#1EF3CF" }, "50": { "$value": "#02D4B1" }, "60": { "$value": "#03B497" }, "70": { "$value": "#01967D" }, "80": { "$value": "#006756" } },
+    "red": { "20": { "$value": "#FF86AE" }, "30": { "$value": "#FF6196" }, "40": { "$value": "#FF3B7C" }, "50": { "$value": "#FF0055" }, "60": { "$value": "#DE034C" }, "70": { "$value": "#C20141" }, "80": { "$value": "#A10036" } },
+    "orange": { "20": { "$value": "#FFA362" }, "30": { "$value": "#FF8F3F" }, "40": { "$value": "#FF7E21" }, "50": { "$value": "#FF6A00" }, "60": { "$value": "#E66304" }, "70": { "$value": "#D45A03" }, "80": { "$value": "#B84E03" } },
+    "green": { "20": { "$value": "#D5FF88" }, "30": { "$value": "#C0FD4F" }, "40": { "$value": "#A4F214" }, "50": { "$value": "#8BD700" }, "60": { "$value": "#7EC003" }, "70": { "$value": "#6BA302" }, "80": { "$value": "#5C8C02" } },
+    "purple": { "20": { "$value": "#DA8BFF" }, "30": { "$value": "#CD60FF" }, "40": { "$value": "#BD40F6" }, "50": { "$value": "#A524E1" }, "60": { "$value": "#950CD4" }, "70": { "$value": "#8503C2" }, "80": { "$value": "#7202A6" } },
+    "neutral": { "00": { "$value": "#FFFFFF" }, "20": { "$value": "#E1E1E1" }, "30": { "$value": "#C5C5C5" }, "40": { "$value": "#B1B1B1" }, "50": { "$value": "#A1A1A1" }, "60": { "$value": "#888888" }, "70": { "$value": "#727272" }, "80": { "$value": "#4B4B4B" } },
+    "feedback": {
+      "success": { "1": { "$value": "#55EB47" }, "2": { "$value": "#2BE51A" }, "3": { "$value": "#22B814" } },
+      "warning": { "1": { "$value": "#FFE761" }, "2": { "$value": "#FFD900" }, "3": { "$value": "#DDBC00" } },
+      "error": { "1": { "$value": "#FF3333" }, "2": { "$value": "#FF0000" }, "3": { "$value": "#CC0000" } }
+    }
+  }
+}

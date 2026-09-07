@@ -2,7 +2,7 @@
   display: flex;
   height: 100vh;
   flex-direction: column;
-  background: #111827;
+  background: var(--color-surface-page-bottom);
 }
 
 .topSection {
@@ -27,8 +27,8 @@
 .footerSection {
   width: 100%;
   flex-shrink: 0;
-  border-top: 1px solid #1f2937;
-  background: #111827;
+  border-top: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-page-bottom);
   padding: 1rem;
   z-index: 50;
 }

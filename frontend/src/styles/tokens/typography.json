@@ -1,0 +1,15 @@
+{
+  "$description": "Lootbook typography token source imported from the approved handoff.",
+  "font": {
+    "family": {
+      "display": { "$value": ["Acme", "system-ui", "sans-serif"] },
+      "body": { "$value": ["Open Sans", "Noto Sans", "system-ui", "sans-serif"] }
+    },
+    "size": {
+      "3xs": { "$value": "10px" }, "2xs": { "$value": "12px" }, "xs": { "$value": "13px" }, "sm": { "$value": "14px" }, "md": { "$value": "16px" }, "lg": { "$value": "18px" }, "xl": { "$value": "20px" }, "2xl": { "$value": "24px" }, "3xl": { "$value": "30px" }, "4xl": { "$value": "40px" }
+    },
+    "lineHeight": { "tight": { "$value": 1 }, "body": { "$value": 1.5 }, "relaxed": { "$value": 1.7 }, "control": { "$value": "24px" } },
+    "weight": { "regular": { "$value": 400 }, "semibold": { "$value": 600 }, "bold": { "$value": 700 } },
+    "letterSpacing": { "normal": { "$value": "0em" }, "wide": { "$value": "0.08em" }, "wider": { "$value": "0.14em" } }
+  }
+}

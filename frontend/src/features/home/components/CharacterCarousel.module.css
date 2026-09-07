@@ -1,12 +1,12 @@
 .embla {
   overflow: hidden;
   width: 100%;
-  padding: 3rem;
+  padding: var(--space-12);
 }
 
 .emblaContainer {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .emblaSlide {

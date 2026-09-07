@@ -3,11 +3,11 @@
   height: 380px;
   border-radius: 30px;
   background: transparent;
-  border: 2px dashed var(--primary-color, #00ffe0);
+  border: 2px dashed var(--color-border-accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary-color, #00ffe0);
+  color: var(--color-accent-default);
   position: relative;
   overflow: visible;
 }
@@ -21,7 +21,7 @@
   height: 100%;
   left: 44%;
   top: 7%;
-  background: var(--primary-color, #00ffe0);
+  background: var(--color-accent-default);
   filter: blur(80px);
   z-index: 0;
   opacity: 0;
@@ -38,13 +38,15 @@
 
 .icon {
   font-size: 2rem;
-  filter: drop-shadow(0 0 26px #00ffe0) drop-shadow(0 0 30px #00ffe0)
-    drop-shadow(0 0 52px #00ffe0);
+  filter: drop-shadow(0 0 26px var(--color-accent-default))
+    drop-shadow(0 0 30px var(--color-accent-default))
+    drop-shadow(0 0 52px var(--color-accent-default));
 }
 
 .text {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--primary-color, #00ffe0);
-  text-shadow: 0 0 24px #00ffe0, 0 0 93px #00ffe0, 0 0 30px #00ffe0;
+  color: var(--color-accent-default);
+  text-shadow: 0 0 24px var(--color-accent-default),
+    0 0 93px var(--color-accent-default), 0 0 30px var(--color-accent-default);
 }
