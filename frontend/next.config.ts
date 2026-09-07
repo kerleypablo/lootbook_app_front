@@ -1,6 +1,9 @@
+import path from "node:path";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: path.join(__dirname),
   async rewrites() {
     // Keep browser requests on the Next origin so local development does not depend on CORS.
     return [
