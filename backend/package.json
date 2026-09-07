@@ -15,6 +15,11 @@
     "test:rls:e2e": "npm run build && node scripts/rls-e2e.mjs",
     "test:task5:e2e": "npm run build && node scripts/task5-e2e.mjs",
     "test:task6:e2e": "npm run build && node scripts/task6-e2e.mjs",
+    "test:task7:e2e": "npm run build && node scripts/task7-e2e.mjs",
+    "test:automation": "npm run build && node scripts/calculator-unit.test.mjs",
+    "test:errors": "npm run build && node scripts/error-handler-unit.test.mjs",
+    "test:ownership": "node scripts/ownership-audit.test.mjs",
+    "test:performance": "node scripts/performance-audit.test.mjs",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy"

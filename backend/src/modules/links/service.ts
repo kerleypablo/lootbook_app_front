@@ -1,11 +1,16 @@
 import type { FastifyBaseLogger } from "fastify";
+import type { Prisma } from "@prisma/client";
 import { AppError } from "../../shared/errors/app-error.js";
 import { invalidLinkError, recalculateCharacter, validateLinkDefinition } from "./calculator.js";
 import { LinkRepository } from "./repository.js";
 import type { CreateCharacterLinkInput } from "./types.js";
+import { SnapshotService } from "../snapshots/service.js";
 
 export class LinkService {
-  constructor(private readonly repository: LinkRepository) {}
+  constructor(
+    private readonly repository: LinkRepository,
+    private readonly snapshotService: SnapshotService,
+  ) {}
 
   async create(
     userId: string,
@@ -62,7 +67,14 @@ export class LinkService {
     try {
       const input = await this.repository.getOwnedCalculationInput(userId, characterId);
       if (!input) this.characterNotFound(characterId);
-      return recalculateCharacter(input);
+      const state = recalculateCharacter(input);
+      const snapshot = await this.snapshotService.create(
+        userId,
+        characterId,
+        state as unknown as Prisma.InputJsonValue,
+        logger,
+      );
+      return { state, snapshot };
     } catch (error) {
       if (error instanceof AppError) throw error;
       logger.error({ err: error, userId, characterId }, "Failed to recalculate character");

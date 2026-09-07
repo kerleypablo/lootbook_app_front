@@ -2,10 +2,15 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import { AppError } from "../../shared/errors/app-error.js";
 import { LinkRepository } from "./repository.js";
 import { LinkService } from "./service.js";
+import { SnapshotRepository } from "../snapshots/repository.js";
+import { SnapshotService } from "../snapshots/service.js";
 import type { CharacterIdParams, CharacterLinkIdParams, CreateCharacterLinkInput } from "./types.js";
 
 function service(request: FastifyRequest) {
-  return new LinkService(new LinkRepository(request.server.prisma));
+  return new LinkService(
+    new LinkRepository(request.server.prisma),
+    new SnapshotService(new SnapshotRepository(request.server.prisma)),
+  );
 }
 
 function userId(request: FastifyRequest) {
@@ -43,6 +48,6 @@ export async function recalculateCharacterController(
   request: FastifyRequest<{ Params: CharacterIdParams }>,
   reply: FastifyReply,
 ) {
-  const state = await service(request).recalculate(userId(request), request.params.id, request.log);
-  return reply.status(200).send({ state });
+  const result = await service(request).recalculate(userId(request), request.params.id, request.log);
+  return reply.status(200).send(result);
 }

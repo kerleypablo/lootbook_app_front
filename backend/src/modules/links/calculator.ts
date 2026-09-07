@@ -12,6 +12,7 @@ import type {
 import type { LinkOperation } from "@prisma/client";
 
 type JsonObject = Record<string, unknown>;
+type RoundingMode = "floor" | "ceil" | "round" | "none";
 
 function isObject(value: unknown): value is JsonObject {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -32,6 +33,15 @@ function numericConfig(config: JsonObject, key: string, required: boolean, fallb
 
 function round(value: number) {
   return Math.round((value + Number.EPSILON) * 10_000) / 10_000;
+}
+
+function applyRounding(value: number, mode: RoundingMode) {
+  switch (mode) {
+    case "floor": return Math.floor(value);
+    case "ceil": return Math.ceil(value);
+    case "round": return Math.round(value + Number.EPSILON);
+    case "none": return value;
+  }
 }
 
 function validateTargetField(targetType: LinkTargetType, config: JsonObject) {
@@ -91,6 +101,12 @@ export function validateLinkDefinition(
       const sourceField = config.sourceField;
       if (sourceField !== undefined && !["baseValue", "currentValue", "maxValue"].includes(String(sourceField))) {
         throw new Error("configJson.sourceField is invalid");
+      }
+      if (
+        config.rounding !== undefined
+        && (typeof config.rounding !== "string" || !["floor", "ceil", "round", "none"].includes(config.rounding))
+      ) {
+        throw new Error("configJson.rounding is invalid");
       }
       numericConfig(config, "multiplier", false, 1);
       numericConfig(config, "offset", false, 0);
@@ -185,8 +201,9 @@ function apply(
       if (!stat) throw new Error(`Source stat ${source.id} was not found`);
       const sourceField = (config.sourceField ?? "currentValue") as "baseValue" | "currentValue" | "maxValue";
       const sourceValue = stat[sourceField] ?? (sourceField === "currentValue" ? stat.baseValue : null) ?? 0;
-      after = sourceValue * numericConfig(config, "multiplier", false, 1)
+      const linearResult = sourceValue * numericConfig(config, "multiplier", false, 1)
         + numericConfig(config, "offset", false, 0);
+      after = applyRounding(linearResult, (config.rounding ?? "none") as RoundingMode);
       break;
     }
     case "SUM_WEIGHTS":

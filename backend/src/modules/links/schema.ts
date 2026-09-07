@@ -77,8 +77,11 @@ export const linkSchemas = {
     response: {
       200: {
         type: "object",
-        required: ["state"],
-        properties: { state: { type: "object", additionalProperties: true } },
+        required: ["state", "snapshot"],
+        properties: {
+          state: { type: "object", additionalProperties: true },
+          snapshot: { type: "object", additionalProperties: true },
+        },
       },
     },
   },
